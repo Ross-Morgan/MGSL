@@ -5,10 +5,6 @@ import (
 	"os"
 )
 
-func argShorthand(argName string) string {
-	return fmt.Sprintf("-%s", string(argName))
-}
-
 func checkEnoughArgs(required []string, given []string) bool {
 	return len(given) >= len(required)
 }
