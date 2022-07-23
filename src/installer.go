@@ -33,12 +33,31 @@ func Color(colorString string) func(...interface{}) string {
 	return sprint
 }
 
+func LogMissing(missingCommands []string) {
+	if len(missingCommands) == 0 {
+		return
+	}
+
+	fmt.Println("\nMissing Programs:")
+
+	for _, command := range missingCommands {
+		fmt.Println(command)
+	}
+
+	fmt.Println("\nInstall / Modify these programs so that they can be called in the shell.")
+}
+
 func CommandExists(command string) bool {
 	_, err := exec.LookPath(command)
 	return err == nil
 }
 
 func CheckCommandsExist(commands []string) {
+	fmt.Println("Checking program existence")
+	fmt.Println("--------------------------")
+
+	missing := []string{}
+
 	var command_exists bool
 	var printColor func(...interface{}) string
 
@@ -48,17 +67,19 @@ func CheckCommandsExist(commands []string) {
 		if command_exists {
 			printColor = Success
 		} else {
+			missing = append(missing, command)
 			printColor = Fatal
 		}
 
-		fmt.Printf("%s\t| %s\n", command, printColor(strconv.FormatBool(command_exists)))
+		fmt.Printf("%s\t|\t%s\n", command, printColor(strconv.FormatBool(command_exists)))
 	}
+
+	LogMissing(missing)
+
 }
 
 func main() {
 	commands := []string{"go", "g++"}
-
-	fmt.Println("Checking command existence...")
 
 	CheckCommandsExist(commands)
 }
