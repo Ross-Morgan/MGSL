@@ -144,7 +144,6 @@ func main() {
 		"g++ c++/main.cpp -o ../bin/mgsl.exe",
 		"g++ c++/shell.cpp -o ../bin/mgsl_shell.exe",
 		"go build go/parse_args.go -o ../bin/arg_parser.exe",
-		"A",
 	}
 
 	code := CheckCommandsExist(buildCommands)
@@ -152,4 +151,6 @@ func main() {
 	if code != 0 {
 		exitWithCode(code)
 	}
+
+	// RunCommands(buildCommands)
 }
